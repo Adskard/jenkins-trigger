@@ -104,10 +104,10 @@ async function waitJenkinsJob(jobName, queueItemUrl, timestamp) {
     if ( buildData.Building ) {
       // building
     }
-    else if (buildData.result == "SUCCESS") {
+    else if (buildData.buildResult == "SUCCESS") {
       core.info(`>>> Job '${buildData.fullDisplayName}' completed successfully!`);
       break;
-    } else if (buildData.result == "FAILURE" || buildData.result == "ABORTED") {
+    } else if (buildData.buildResult == "FAILURE" || buildData.buildResult == "ABORTED" || buildData.buildResult == "NOT_BUILD") {
       throw new Error(`Job '${buildData.fullDisplayName}' failed.`);
     }
 
