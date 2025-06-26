@@ -99,7 +99,7 @@ async function waitJenkinsJob(jobName, queueItemUrl, timestamp) {
     }
 
     let buildData = await getJobStatus(jobName, buildUrl);
-    core.info("Building data: " + buildData )
+    core.info("Building data: " + JSON.stringify(buildData) )
 
     if ( buildData.Building ) {
       // building
