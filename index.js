@@ -99,16 +99,18 @@ async function waitJenkinsJob(jobName, queueItemUrl, timestamp) {
     }
 
     let buildData = await getJobStatus(jobName, buildUrl);
-    core.info("Building data: " + JSON.stringify(buildData) )
 
     if ( buildData.building ) {
-      // building
-      core.info("still building: " + buildData.inProgress)
+      core.debug("Still building: " + buildData.inProgress)
     }
     else if (buildData.result == "SUCCESS") {
       core.info(`>>> Job '${buildData.fullDisplayName}' completed successfully!`);
       break;
-    } else if (buildData.result == "FAILURE" || buildData.result == "ABORTED" || buildData.buildResult == "NOT_BUILD") {
+    }
+    else if (buildData.result == "UNSTABLE") {
+      throw new Error(`Job '${buildData.fullDisplayName}' is unstable, tests failed.`);
+    }
+    else if (buildData.result == "FAILURE" || buildData.result == "ABORTED" || buildData.result == "NOT_BUILD") {
       throw new Error(`Job '${buildData.fullDisplayName}' failed.`);
     }
 
