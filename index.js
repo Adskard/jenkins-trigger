@@ -92,7 +92,7 @@ async function waitJenkinsJob(jobName, queueItemUrl, timestamp) {
       }
 
       if (!buildUrl) {
-        core.info(`>>> Job '${jobName}' is queued (Reason: '${queueData.why}'). Sleeping for ${sleepInterval}s...`);
+        core.debug(`>>> Job '${jobName}' is queued (Reason: '${queueData.why}'). Sleeping for ${sleepInterval}s...`);
         await sleep(sleepInterval);
         continue;
       }
@@ -114,7 +114,7 @@ async function waitJenkinsJob(jobName, queueItemUrl, timestamp) {
       throw new Error(`Job '${buildData.fullDisplayName}' failed.`);
     }
 
-    core.info(`>>> Job '${buildData.fullDisplayName}' is executing (Duration: ${buildData.duration}ms, Expected: ${buildData.estimatedDuration}ms). Sleeping for ${sleepInterval}s...`);
+    core.debug(`>>> Job '${buildData.fullDisplayName}' is executing (Duration: ${buildData.duration}ms, Expected: ${buildData.estimatedDuration}ms). Sleeping for ${sleepInterval}s...`);
     await sleep(sleepInterval); // API call interval
   }
 }
